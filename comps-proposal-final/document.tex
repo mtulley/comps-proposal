@@ -1,0 +1,209 @@
+
+
+% -------- Formatting Stuff -------- % 
+
+
+\documentclass[10pt,twocolumn]{article}
+\usepackage{oxycomps}
+\newcommand{\fixme}[2][]{#2}
+\renewcommand{\fixme}[2][]{\textcolor{red}{#2}}
+\bibliography{references}
+\pdfinfo{/Title (Large Language Models for Video Game Dialogue: Dynamic Storytelling and Effects on Player Experience)/Author (Max Tulley)}
+\title{Large Language Models for Video Game Dialogue: Dynamic Storytelling and Effects on Player Experience}
+\author{Max Tulley}
+\affiliation{Occidental College}
+\email{tulley@oxy.edu}
+\begin{document}
+\maketitle
+
+
+% -------- Beginning of Paper Content -------- % 
+
+
+\begin{abstract}
+
+    This paper examines the use of Large Language Models in video game dialogue systems through the design and testing of a top-down role-playing game demo. Based on previous works and literature discussing this topic, this demo game will be designed to create a coherent and engaging experience. An iterative user-testing process will be implemented for the examination of the Large Language Model's ability to generate dialogue and the implementation of the dialogue within the game. Fine-tuning, prompt engineering, and retrieval augmented generation will be used to improve dialogue generation. A system for auditing responses will be implemented to prevent obvious errors, such as incorrect formatting. Finally, with user testing of the final game demo, users will rate their experience against static dialogue systems to determine whether current LLM capabilities offer a more enjoyable experience for players. 
+    
+\end{abstract}
+
+\section{Introduction and Problem Context}
+    
+    \par 
+    The implementation of large language models (LLMs) in games has become an interesting topic of discussion among game designers and designers of mediated experiences more generally. Although this paper will focus mostly on video games, much of the information applies to other mediated experiences as well which implement AI controlled characters and agents. LLMs offer exciting new paths for many aspects of game design, including narrative design, dialogue generation, world generation, and coding. Perhaps the most obvious and direct use of LLMs in games is for generating dialogue. Many types of games make use of dialogue for storytelling, player direction, and NPC (Non-Playable Character) interaction. Large language models provide the opportunity for dynamic dialogue in which responses are semi-randomized, creating a more lifelike world and potentially increasing player engagement and immersion. A more immersive game world can lead to increased player emotional responses to the narrative, increased engagement with the game world, and a more fulfilling experience of playing the game. 
+    
+    \par 
+    The goal of this project will be to explore these questions:
+        \newline1) Can LLMs generate coherent and narratively consistent dialogue for video games? 
+        \newline2) How does LLM generated dialogue affect player experience?
+        \newline3) What are the current technical limitations in implementing LLMs for game dialogue?
+        \newline4) What is the current state of dynamic storytelling through LLM in the academic literature?
+    
+\section{Technical Background}
+    
+    \par
+    It's important to understand the common implementations of dialogue systems in games in order to understand why LLMs offer such an exciting alternative. Most games use fixed/scripted dialogue systems. Game developers will write scripts for each character and conversation. The player can often select from a few dialogue options that will influence the course of the conversation. This offers limited conversational flexibility and can be predictable and consequently uninteresting. LLMs offer the ability for dialogue to be generated in real-time and allow for the player to input anything they want. This simulates real conversation much more accurately and would add a more lifelike quality to all conversations. The training of large language models takes a large amount of resources and time. Fine-tuning is the process of training an pretrained LLM on a small task-specific dataset. This can make the training process less resource intensive and still produce an LLM that is specialized for whatever task is desired. Prompt engineering is the process of creating ideal prompts for a desired output. Context, when talking about LLMs, is the information given to an LLM in a prompt that helps it generate better responses. Giving good context is a part of good prompt engineering. 
+    
+    \par 
+    The game demo for testing LLM dialogue is made in the Godot Game Engine using C\# for scripting. 
+
+\section{Prior Work}
+
+    \par
+    This section will review recent academic literature which relates to LLMs in video games. This literature review does not follow a systematic approach, however, the process will be described here. The articles discussed were found using the following search query in multiple online databases: "("Video games" OR "games") AND ("LLM" OR "Large Language Model")". The articles were then selected manually, and any articles that did not discuss real-time dialogue generation were disregarded. 
+
+    \subsection{Use Cases}
+
+        \par
+        This section will explain the common use cases for LLMs in video games discussed in the academic literature. These include real-time dialogue generation, narrative generation, and procedural game world generation.
+    
+        \subsubsection{Dialogue Generation}
+        
+            \par
+            This topic is the most relevant for this paper since this project will focus on creating dialogue with LLMs. There are two options for LLM generated dialogue. The LLM can generate dialogue during the game development process which would then be implemented into a fixed dialogue system. The other option is to use the LLM for real-time dialogue that is generated while the game is played. The second option is much more revolutionary than the first as it allows for a completely new way to control game dialogue. Because of this, most recent research in this field examines the real-time generation of LLM dialogue\cite{huang_generating_2024}\cite{akoury_framework_2023}\cite{csepregi_effect_nodate}\cite{cox_conversational_2024}.
+    
+        \subsubsection{Narrative Generation}
+            
+            \par
+            Narrative generation in video games using large language models focuses on the dynamic creation of plotlines, quests, and story arcs rather than just dialogue. By leveraging their ability to understand and produce coherent long-form text, LLMs can generate entire narrative structures that adapt to player actions and in-game events. This enables a shift away from rigid, pre-scripted storylines toward more fluid, emergent storytelling experiences. Games can present players with procedurally generated plots that still maintain thematic consistency, pacing, and character development. LLM-driven narrative generation holds the potential to greatly enhance player agency and replayability, but it also introduces challenges in ensuring narrative coherence, balancing player freedom with plot structure, and integrating generated content with game mechanics and world-building.
+
+        \subsubsection{Procedural Generation}      
+
+            \par
+            Procedural generation in video games using large language models enables the creation of rich, varied game content such as quests, lore, item descriptions, and environmental storytelling elements in real time. Unlike traditional procedural systems that rely on handcrafted rules and templates, LLMs can generate content with greater linguistic diversity and contextual awareness, resulting in more immersive and believable worlds. For example, an LLM can create a unique backstory for a village, generate side quests that reference recent player actions, or describe ancient ruins with tone and style consistent with the game’s setting. This allows for high variability without sacrificing narrative depth. However, challenges include maintaining internal consistency, avoiding repetition or contradictions, and ensuring that generated content aligns with game design goals and player expectations.
+
+    \subsection{Types of Games}
+
+        \par
+        This section will evaluate the types of games that previous articles have written about. Some common themes among these papers are the focus on role-playing games and virtual/extended reality. 
+
+        \subsubsection{Role-Playing Games}
+
+            \par
+            One of the most frequently mentioned genres of video games in video game LLM papers are role-playing games (RPGs). There is some debate over the definition of role-playing game, like whether the player-character must be a blank slate, but this paper will use the following definition. Role-playing games are games in which the player chooses player attributes such as skills, stats, appearance, and personality. The player's attributes and choices will affect the gameplay and narrative of the game. This genre of video game would benefit massively from the successful integration of LLMs since much of the gameplay of RPGs is dialogue. CRPGs (Computer RPGs) originate from TTRPGs (Table-top RPGs) like Dungeons and Dragons in which the Dungeon Master acts as the NPCs. This allows for incredible emergent gameplay and dynamic NPC-player interaction, since the NPC dialogue is improvised and acted on by a person. CRPGs lack this dynamic and unpredictable NPC interaction. LLMs could potentially add an AI dungeon master to CRPGS and simulate the randomness and unpredictability of real conversation. CRPGs mostly use scripted dialogue which is less interactive than real conversation, since there are only a few dialogue options for the player to choose and a few responses that the NPC can give. Comparing this with an LLM operated NPC where the player can say anything and the NPC can give real-time responses. Clearly an LLM NPC would be much more interactive in a game and simulate real life conversation more accurately. This would make the game world more believable and give the player the feeling of having more control over their character and their conversations with NPCs.
+
+        \subsubsection{Extended Reality}
+
+            \par
+            Extended reality is an umbrella term which covers virtual reality, augmented reality, and mixed reality. It is a topic which comes up frequently in the academic research of LLMs in games and for good reason. The goal of implementing LLM-NPCs is to create a more immersive and lifelike world\cite{christiansen_exploring_2024}. This complements extended reality as it too seeks to increase player immersion in the game/media world. Many studies use text-to-speech and speech-to-text for their dialogue systems. This simulates reality better than typing dialogue into a textbox or choosing dialogue from dialogue options. Text-to-speech offers the ability for LLM dialogue to be spoken by an AI voice, so that the NPC can talk to the player. This paper suggests that using text-to-speech actually harms player immersion since AI-voices often fall into the uncanny valley and players can immediately identify an AI generated voice line. Additionally, many studies have identified the delay of LLM response generation to be a technical problem with LLM integration in games. This causes a problem in extended reality games since players are expecting NPCs to act more life-like. In non-extended reality games, say for example a game with text boxes for dialogue, the delay is not as much of a problem since the player will not be expecting lifelike speech behavior from NPCs. The problem of LLM response time can also be mitigated with rolling text, so that the response is given to the player as the LLM is generating it, much like Chat-GPT 4 does.
+
+\section{Methods}
+
+    \par
+    This section lays out the approaches that will be taken in constructing the project. 
+
+    \par 
+    The first question that this paper aims to answer is: "Can LLMs generate coherent and narratively consistent dialogue for video games?" Coherent dialogue means that what the NPC says makes sense in the context of the conversation. For instance, if the player asks an NPC a question, the NPC will give a response in-character. Narratively consistent dialogue means that the NPC dialogue makes sense in the context of the overall narrative of the game. For example, if the player asks an NPC to give them information about something, that NPC should only give information that the NPC should know. 
+
+    \subsection{Selecting a Model}
+    
+        \par 
+        In order to increase coherency and narrative consistency, several methods will be used. Firstly, choosing a large language model that specializes in conversational responses is important. Several models will be examined and tested. For each model, several categories of competence will be tested: contextual accuracy, literary quality, and speed. The model which scores highest in these categories on average will be selected for use in the game demo. 
+
+        \subsubsection{Contextual Accuracy}
+        
+            \par
+            To test contextual accuracy, 100 responses will be evaluated for errors. Errors include reciting incorrect information about the NPC or the game world, reciting information that is outside the scope of the context window, and giving responses that do not align with the NPC's personality traits or relationship with the player. Each LLM will be given a score out of 100. 
+
+        \subsubsection{Literary Quality}
+        
+            \par
+            Literary quality is harder to test since it is subjective. What one person deems good quality literature may not be the same for all players. User testing will be performed to find what the majority considers to be good quality. At least 10 testers will examine 100 LLM responses for each model and give each response a score of 1 to 5 for quality of writing. Users will be asked not to factor in context or coherence into their scores. The average score will be calculated for each model.
+
+        \subsubsection{Speed}
+        
+            \par 
+            Speed will be determined by a custom testing program. The average response time will be calculated for at least 100 responses for each model.
+
+    \subsection{Customization of the Model}
+
+        \par 
+        Once a model has been selected, the model must be customized to make it specialized for dialogue generation. Several steps will be taken to achieve this. First, the model will be fine-tuned on a smaller curated dataset. Then, a retrieval-augmented wrapper will be implemented to make responses more world accurate for static world lore. For dynamic narrative memory, a memory management system will be implemented. Finally, a curation program will be written to catch any responses that are problematic and query the LLM again for another response. 
+
+        \subsubsection{Fine-Tuning}
+
+            \par 
+            The purpose of fine-tuning for this project is to have the model speak in character, respond in short quick responses, and stay within the genre. I will first create a dataset for the model either by writing example dialogues myself or by training it on existing data like books, video game transcripts, etc. These datasets could also be used together. This project will use LoRA or QLoRA fine-tuning since it can be done with less resources than fully fine-tuning which takes multiple GPUs and more time. Low-Rank Adaptation (LoRA) fine-tuning only trains small adaptive layers over the base model. This means that the base model retains its language processing skills and you can switch between many different personalities, which is important for generating interesting dialogue for multiple NPCs. After each fine-tuning session, the model will be tested and put through an iterative process. Once a certain threshold for contextual accuracy, literary quality and speed is achieved or no further improvement is made in multiple training sessions, the fine-tuning process will be completed. 
+
+        \subsubsection{Retrieval Augmented Memory}
+
+            \par 
+            Retrieval Augmented Memory or RAG is a technique for improving LLM accuracy for specific static datasets, like company information. For this project, RAG will be used to help the model recall information about the world's lore like place-names, item descriptions, and well-known characters as discussed by \textcite{kostilainen_next_2024}. Everything that all characters should know and that will not change throughout the game can be placed into a dataset that will be used for RAG. The model will be iteratively tested for accuracy of information regarding the custom RAG datasets. RAG can cause extra latency for generation since it adds extra overhead to find information from an external database. This latency will be recorded and tested later for effects on user experience. 
+
+        \subsubsection{Memory Management System}
+
+            \par 
+            A memory management system, MMS from now on, is similar to RAG in that it relies on external data to be searched after prompting and before generation. An MMS allows for long-term dynamic memory storage. For instance, previous dialogue with a certain NPC can be stored and used for new dialogue generation. In addition, plot points and narrative information can be stored in an MMS. Importantly, an MMS is continually updated as the game goes on, whereas RAG datasets are static. 
+
+        \subsubsection{Response Curation}
+
+            \par 
+            The final step in customizing the model will be to implement a response curation program. This program will filter problematic dialogue. It will flag responses that contain certain keywords. For example, if a certain NPC is not supposed to know about another character, they should not say their name in dialogue unless a player gives them the name. In addition, inappropriate responses will be filtered with keywords. When a response is flagged the system will automatically send another query to the LLM stating why the response was flagged and requesting another response to the player's dialogue. 
+        
+\section{Evaluation Metrics}
+
+    \par 
+    The goal of this project is to generate real-time, coherent, and narratively driven dialogue. In order to evaluate the success of the project, these three criteria will be tested individually. The testing will follow the same steps as the testing for selecting a base model. Contextual accuracy will be determined by analyzing 100 dialogue responses for contextual specific questions and categorizing them into contextually accurate and not contextually accurate responses. A percentage will be calculated to show the contextual accuracy of the LLM dialogue. Next, the literary quality will be evaluated through a process of user testing. A group of at least 10 evaluators will give ratings of 1-5 for each dialogue response regarding the literary quality of the LLM dialogue. All ratings will be averaged to give a score out of 5 for literary quality. The speed of the LLM will be assessed with a program that averages the dialogue latency for 1000 dialogue responses.
+
+    \par
+    Once the dialogue has been assessed with these metrics, there will be user testing for overall experience. In a survey, players will rate their experience with the dialogue interface, the integration of the gameplay and dialogue systems, the narrative quality regarding dialogue, and the overall experience of interacting with LLM NPCs in game. At least 10 playtesters will be surveyed. 
+
+\section{Ethical Considerations}
+
+    \par 
+    This section will discuss the ethical implications of using Large Language Models to create video game dialogue. 
+
+    \subsection{Bias}
+
+        \par
+        One major issue with LLMs is the unpredictable nature of their responses. They generate response from massive datasets that are difficult to curate. As a result, some problematic data can be used in the training process and cause unwanted effects such as inappropriate or controversial responses. Similarly, bias can be unknowingly trained into an LLM if the data is poisoned\cite{data_poisoning}. In 2023, the World Association for Artificial Consciousness conducted several studies to locate bias in the most popular LLMs. They tested mainstream models for regional, racial, and age bias using evaluation tools and datasets. These studies conclude that the top LLMs have a low to moderate level of regional bias\cite{duan_ranking_nodate}, a low to moderate level of racial bias\cite{duan_large_nodate}, and a moderate to high level of age bias\cite{yucong_duan_large_2024}. These biases can exacerbate social inequalities when LLMs are used in the wrong situations. For example, job application screenings are being done more and more by LLMs which may have biases. This could cause unintentional discrimination against certain applicants. There are many more applications of LLMs which could be problematic, considering potential biases, like insurance, judicial and legal assistants, customer chat bots, educational chat bots, etc. 
+
+    \subsection{Security and Privacy}
+
+        \par 
+        There are many security and privacy risks involved with the use of large language models. This paper will not discuss every security threat to LLMs generally, but will address issues specific to LLM generated video game dialogue. The specific threats identified in this paper are inference attacks, prompt injection, and extraction attacks. Inference attacks are attacks that seek to obtain information about LLM training data by inference\cite{model_leeching}. These attacks do not seek to gain training data directly, but use inference to gain secondary information. This type of attack is a concern for this project since an adversary who successfully carries out this attack could gain information about the fine-tuned training datasets and exploit this information for gain within the game. A survey of papers discussing LLM vulnerabilities found that fine-tuning adaptive layers rather than the head of the model reduces the risks of membership inference attacks\cite{llm_security_survey}. This is not much of an issue in single-player games, but for a competitive multiplayer game, the adversary might gain an advantage over other players, creating an unfair gaming experience. A similar issue arises with the threat of prompt injection, which occurs when an adversary provides input to the LLM that generates harmful or unintended responses, such as leakage of sensitive information about other players or about the game\cite{prompt_injection}.
+
+    \subsection{Content Moderation}
+
+        \par 
+        Content moderation is an essential step in ensuring a safe gaming environment for players. LLM dialogue is generated dynamically, increasing the risk of harmful, offensive, and inappropriate responses. To mitigate this risk, a combination of careful prompt engineering and rule-based moderation is required. There has been some exploration of the use of LLMs as content moderators themselves. One study found that the median precision was 64\% and the median precision was 83\% for several popular LLMs regarding the moderation of content in online forums\cite{content_moderation}. This is better than nothing, but for full protection against harmful content, it is advisable to implement a rule-based system. It is also important to detect and respond to edge cases such as prompt injection, especially in multiplayer games. 
+
+    \subsection{Creative Authenticity}
+
+        \par 
+        There is much discussion about the integrity of LLM generated content. The issue extends to all fields in which LLM are being used, especially in creative fields. Some people argue that LLMs are inauthentic and simply regurgitate what other people have written. This issue is especially significant in academia\cite{academic_integrity}\cite{academic_integrity2}. While large language models are derivative, meaning they generate responses based on previous data, they offer writers the opportunity to generate massive amounts of essentially filler material. When used in conjunction with human written narrative and storytelling, they can be used to fill in a world so that it feels more real while maintaining the narrative of the human writers. 
+        
+    \subsection{Player Manipulation}
+
+        \par
+        Player manipulation is an ongoing issue in video game design. Certain features of games are designed to manipulate players into continuing to play the game, watching advertisements, and spending money. This can be malicious if the methods become predatory or unfair to the player. One issue that is particularly egregious, yet has not received much legal attention is video game gambling. Many games have adopted a loot-crate monetization model in which players spend real world money for a randomized digital content reward. The House of Lords in the UK states that they do not consider this gambling since there is no option to cash out for real money\cite{loot_boxes}. However, for many games there are third party websites which are used to buy and sell accounts for real money, offering players the ability to cash out. Whether or not there is real money involved, the psychological effects of these systems are something to be considered. This issue is pertinent to LLMs in games since LLMs can be subtly used to persuade players to act differently. Players may be convinced to buy an in game item or play for a bit longer. This use of LLMs can quickly become malicious and harm the user's experience.
+
+\section{Timeline}
+
+    \par 
+    Here is the proposed timeline for this project: \newline 
+    
+    \begin{itemize}
+        \item June \newline\newline
+            \textbf{--} Work on game design document \newline
+        \item July \newline\newline
+            \textbf{--} Finish game design document \newline
+        \item August \newline\newline
+            \textbf{--} Week 1-2: Choose model, fine-tune \newline
+            \textbf{--} Week 3-4: Work on retrieval augmented generation system and memory management system \newline
+        \item September \newline\newline
+            \textbf{--} Week 1-2: Continue working on RAG and MMS \newline
+            \textbf{--} Week 3-4: Begin user testing \newline
+        \item October\newline\newline
+            \textbf{--} Week 1-2: Continue user testing and working on RAG and MMS \newline
+            \textbf{--} Week 3-4: Finish RAG and MMS \newline
+        \item November \newline\newline
+            \textbf{--} Week 1-2: Begin working on filtering system \newline
+            \textbf{--} Week 3-4: Finish filtering system perform final user testing \newline
+        \item December\newline\newline
+            \textbf{--} Week 1-2: Work on poster and final polishing of game demo \newline
+            \textbf{--} Week 3-4: Final submission \newline
+    \end{itemize}
+    
+\printbibliography
+
+\end{document}
